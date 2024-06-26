@@ -169,7 +169,7 @@ tuple<float, float, float> interpolate(vector<TRIVER> &triOld, float rowP, float
     // triOld[0].color -> color of vertex A
     // triOld[1].color -> color of vertex B
     // triOld[2].color -> color of vertex C
-    int threshold1 = 10;
+    int threshold1 = 100;
     int threshold2 = 100;
     float cPBC = areaPBC / triArea;
     int key1 = round(cPBC * threshold1);
@@ -179,7 +179,8 @@ tuple<float, float, float> interpolate(vector<TRIVER> &triOld, float rowP, float
     int key3 = round(cPAB * threshold1);
 
     auto key = make_tuple(key1, key2, key3);
-    if(cache.find(key) != cache.end()){
+    //cache.find(key) != cache.end()
+    if(false){
         return cache[key];
     }
     else{
@@ -246,13 +247,13 @@ void traverseTi(vector<vector<PIXEL>> &pixels, int rowS, int rowE, int colS, int
 }
 
 int main(){
-    int times = 10;
+    int times = 100;
     int len = 10 * times;
     int wid = 10 * times;
     vector<vector<PIXEL>> pixels(wid, vector<PIXEL>(len, PIXEL(false, SUPER(false, RGB(0, 0, 0)), SUPER(false, RGB(0, 0, 0)), SUPER(false, RGB(0, 0, 0)), SUPER(false, RGB(0, 0, 0)))));
 
     // triangle coordinates & attributes
-    vector<TRIVER> tri = {TRIVER(1 * times, 1 * times, RGB(1, 0, 0)), TRIVER(8 * times, 2 * times, RGB(1.0, 1.0, 0)), TRIVER(0 * times, 8 * times, RGB(0, 0, 1))};
+    vector<TRIVER> tri = {TRIVER(0 * times, 0 * times, RGB(1, 0, 0)), TRIVER(8 * times, 0 * times, RGB(0, 1, 0)), TRIVER(0 * times, 8 * times, RGB(0, 0, 1))};
     
     // use bounding box and then call rasterization + interpolation process
     int boxRowS = min({tri[0].y, tri[1].y, tri[2].y});
